@@ -4,6 +4,7 @@ import numpy as np
 def start_game():
     user_in = input("Are you ready to play Tic Tac Toe? (Y or N): ");
 
+    # Repeats input prompt until receives proper input
     while True:
         if user_in == "Y":
             return True
@@ -14,16 +15,16 @@ def start_game():
 
 # Prints out game state
 def print_game(game_arr):
-    #TODO: Fix this so you can see coordinates
-    print("      |     |     \n",
-          " ", game_arr[0, 0], " | ", game_arr[0, 1], " | ", game_arr[0, 2], " \n",
-          "_____|_____|_____\n",
-          "     |     |     \n",
-          " ", game_arr[1][0], " | ", game_arr[1][1], " | ", game_arr[1][2], " \n",
-          "_____|_____|_____\n",
-          "     |     |     \n",
-          " ", game_arr[2][0], " | ", game_arr[2][1], " | ", game_arr[2][2], " \n",
-          "     |     |     \n")
+    print("     0     1     2\n",
+          "       |     |     \n",
+          "0  ", game_arr[0, 0], " | ", game_arr[0, 1], " | ", game_arr[0, 2], " \n",
+          "  _____|_____|_____\n",
+          "       |     |     \n",
+          "1  ", game_arr[1][0], " | ", game_arr[1][1], " | ", game_arr[1][2], " \n",
+          "  _____|_____|_____\n",
+          "       |     |     \n",
+          "2  ", game_arr[2][0], " | ", game_arr[2][1], " | ", game_arr[2][2], " \n",
+          "       |     |     \n")
 
 # Determine whether player's requested spot is already taken or not
 def spot_taken(row, column, game_arr):
@@ -46,6 +47,7 @@ def get_player_move(player, game_arr):
     # Checks that the user gave correct coordiantes (i.e. not out of range for the 3x3 table)
     if row not in range(3) or column not in range(3):
         print("You must give valid coordinates for the board (0-2).\n")
+        get_player_move(player, game_arr)
 
     return game_arr
 
@@ -56,24 +58,20 @@ def switch_player(player):
 
 # Checks if a player has won
 def check_for_winner(game_arr, current_player):
-    game_over = 0
-
-    # TODO: MAKE THIS CODE MORE CONCISE!!!
-
     # Checks for 3 straight in columns and rows
     for index in range (3):
         if game_arr[index][0] == game_arr[index][1] == game_arr[index][2] == current_player:
-            game_over = 1
+            return True
         if game_arr[0][index] == game_arr[1][index] == game_arr[2][index] == current_player:
-            game_over = 1
+            return True
     
     # Checks for 3 straight along diagonals
     if game_arr[0][0] == game_arr[1][1] == game_arr[2][2] == current_player:
-        game_over = 1
+        return True
     if game_arr[0][2] == game_arr[1][1] == game_arr[2][0] == current_player:
-        game_over = 1
+        return True
 
-    return game_over
+    return False
 
 # Checks if the game has ended in a tie (i.e. if all spots have been picked)
 def check_for_tie(game_arr):
